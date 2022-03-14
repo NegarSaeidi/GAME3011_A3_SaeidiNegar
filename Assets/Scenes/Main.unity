@@ -5818,6 +5818,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8817dc094a8b19d4a993c4e5ae0fafe6, type: 3}
   FadeInCoroutineStarted: 0
   FadeOutCoroutineStarted: 0
+  scoreTiles:
+  - {fileID: 1025817961}
+  - {fileID: 992541953}
+  - {fileID: 644294744}
+  - {fileID: 1126330608}
+  - {fileID: 876862303}
+  - {fileID: 819996529}
+  - {fileID: 1259649443}
+  - {fileID: 602643916}
+  - {fileID: 699645811}
+  - {fileID: 2037521321}
 --- !u!4 &1551489369
 Transform:
   m_ObjectHideFlags: 0

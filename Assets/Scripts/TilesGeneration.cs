@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class TilesGeneration : MonoBehaviour
 {
     public GameObject tilePrefab;
@@ -12,9 +12,12 @@ public class TilesGeneration : MonoBehaviour
     private int maxRange;
     public static  List<GameObject> gridTiles;
     public bool FadeInCoroutineStarted, FadeOutCoroutineStarted;
+    public GameObject[] scoreTiles;
+    private int[] scores;
     void Start()
     {
         maxRange = 12;
+        scores = new int[10];
         gridTiles = new List<GameObject>();
         for (int i=0; i<RowsParent.Length;i++)
         GenerateTiles(i);
@@ -61,6 +64,7 @@ public class TilesGeneration : MonoBehaviour
                             {
                                 if (!FadeOutCoroutineStarted)
                                 {
+                                    Scoring(gridTiles[i].GetComponent<Image>().sprite);
                                     FadeOutCoroutineStarted = true;
                                     gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
                                     gridTiles[i + 7].GetComponent<Animator>().SetTrigger("Disappear");
@@ -107,19 +111,28 @@ public class TilesGeneration : MonoBehaviour
                      if ((i / 7) == ((i + 2) / 7))
                     if (gridTiles[i].GetComponent<Image>().sprite == gridTiles[i + 2].GetComponent<Image>().sprite)
                     {
-                                if (!FadeInCoroutineStarted)
+                                if (gridTiles[i].GetComponent<Image>().sprite.name == "bomb_circle")
                                 {
-                                    if (!FadeOutCoroutineStarted)
+                                    for (int j = 0; j < gridTiles.Count; j++)
+                                        bombEffect(j);
+                                }
+                                else
+                                {
+                                    if (!FadeInCoroutineStarted)
                                     {
-                                        FadeOutCoroutineStarted = true;
-                                        gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
-                                        gridTiles[i + 1].GetComponent<Animator>().SetTrigger("Disappear");
-                                        gridTiles[i + 2].GetComponent<Animator>().SetTrigger("Disappear");
-                                        StartCoroutine(FadeOut(i, i + 1, i + 2));
-                                    }
-                                    FadeInCoroutineStarted = true;
-                                    StartCoroutine(DelayBeforeRegenerate(i, i + 1, i + 2));
+                                        if (!FadeOutCoroutineStarted)
+                                        {
+                                            Scoring(gridTiles[i].GetComponent<Image>().sprite);
+                                            FadeOutCoroutineStarted = true;
+                                            gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
+                                            gridTiles[i + 1].GetComponent<Animator>().SetTrigger("Disappear");
+                                            gridTiles[i + 2].GetComponent<Animator>().SetTrigger("Disappear");
+                                            StartCoroutine(FadeOut(i, i + 1, i + 2));
+                                        }
+                                        FadeInCoroutineStarted = true;
+                                        StartCoroutine(DelayBeforeRegenerate(i, i + 1, i + 2));
 
+                                    }
                                 }
                     }
                 }
@@ -166,5 +179,51 @@ public class TilesGeneration : MonoBehaviour
        gridTiles[k].GetComponent<Animator>().SetTrigger("Appear");
         gridTiles[k].GetComponent<Image>().color = new Color(gridTiles[k].GetComponent<Image>().color.r, gridTiles[k].GetComponent<Image>().color.g, gridTiles[k].GetComponent<Image>().color.b, 255);
         FadeInCoroutineStarted = false;
+    }
+    private void Scoring(Sprite sp)
+    {
+        switch(sp.name)
+        {
+            case "43":
+                scores[0]++;
+                scoreTiles[0].GetComponent<TextMeshProUGUI>().text = scores[0].ToString();
+                break;
+            case "36":
+                scores[1]++;
+                scoreTiles[1].GetComponent<TextMeshProUGUI>().text = scores[1].ToString();
+                break;
+            case "14":
+                scores[2]++;
+                scoreTiles[2].GetComponent<TextMeshProUGUI>().text = scores[2].ToString();
+                break;
+            case "11":
+                scores[3]++;
+                scoreTiles[3].GetComponent<TextMeshProUGUI>().text = scores[3].ToString();
+                break;
+            case "21":
+                scores[4]++;
+                scoreTiles[4].GetComponent<TextMeshProUGUI>().text = scores[4].ToString();
+                break;
+            case "22":
+                scores[5]++;
+                scoreTiles[5].GetComponent<TextMeshProUGUI>().text = scores[5].ToString();
+                break;
+            case "33":
+                scores[6]++;
+                scoreTiles[6].GetComponent<TextMeshProUGUI>().text = scores[6].ToString();
+                break;
+            case "2":
+                scores[7]++;
+                scoreTiles[7].GetComponent<TextMeshProUGUI>().text = scores[70].ToString();
+                break;
+            case "1":
+                scores[8]++;
+                scoreTiles[8].GetComponent<TextMeshProUGUI>().text = scores[8].ToString();
+                break;
+            case "48":
+                scores[9]++;
+                scoreTiles[9].GetComponent<TextMeshProUGUI>().text = scores[9].ToString();
+                break;
+        }
     }
 }
