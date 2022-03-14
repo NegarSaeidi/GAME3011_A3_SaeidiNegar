@@ -14,7 +14,7 @@ public class TilesGeneration : MonoBehaviour
     public bool FadeInCoroutineStarted, FadeOutCoroutineStarted;
     void Start()
     {
-        maxRange = 11;
+        maxRange = 12;
         gridTiles = new List<GameObject>();
         for (int i=0; i<RowsParent.Length;i++)
         GenerateTiles(i);
