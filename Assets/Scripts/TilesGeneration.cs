@@ -27,6 +27,8 @@ public class TilesGeneration : MonoBehaviour
         {
             GameObject tile = Instantiate(tilePrefab, RowsParent[row].transform.position, RowsParent[row].transform.rotation, RowsParent[row].transform);
             int rand = Random.Range(1, maxRange);
+            if (rand == maxRange - 1)
+                tile.GetComponent<Button>().enabled = false;
             tile.GetComponent<Image>().sprite = tileSprites[rand];
             gridTiles.Add(tile);
             tile.transform.parent = RowsParent[row].transform;
@@ -125,14 +127,20 @@ public class TilesGeneration : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         int rand = Random.Range(1, maxRange);
+        if (rand == maxRange - 1)
+        gridTiles[i].GetComponent<Button>().enabled = false;
         gridTiles[i].GetComponent<Image>().sprite = tileSprites[rand];
        gridTiles[i].GetComponent<Animator>().SetTrigger("Appear");
         gridTiles[i].GetComponent<Image>().color = new Color(gridTiles[i].GetComponent<Image>().color.r, gridTiles[i].GetComponent<Image>().color.g, gridTiles[i].GetComponent<Image>().color.b, 255);
         rand = Random.Range(1, maxRange);
+        if (rand == maxRange - 1)
+        gridTiles[j].GetComponent<Button>().enabled = false;
         gridTiles[j].GetComponent<Image>().sprite = tileSprites[rand];
         gridTiles[j].GetComponent<Animator>().SetTrigger("Appear");
         gridTiles[j].GetComponent<Image>().color = new Color(gridTiles[j].GetComponent<Image>().color.r, gridTiles[j].GetComponent<Image>().color.g, gridTiles[j].GetComponent<Image>().color.b, 255);
         rand = Random.Range(1, maxRange);
+        if (rand == maxRange - 1)
+       gridTiles[k].GetComponent<Button>().enabled = false;
         gridTiles[k].GetComponent<Image>().sprite = tileSprites[rand];
        gridTiles[k].GetComponent<Animator>().SetTrigger("Appear");
         gridTiles[k].GetComponent<Image>().color = new Color(gridTiles[k].GetComponent<Image>().color.r, gridTiles[k].GetComponent<Image>().color.g, gridTiles[k].GetComponent<Image>().color.b, 255);

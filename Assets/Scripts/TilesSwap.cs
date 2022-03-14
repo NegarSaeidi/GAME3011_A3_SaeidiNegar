@@ -36,10 +36,12 @@ public class TilesSwap : MonoBehaviour
                 {
                     if ((thisTileIndex + 1) % 7 != 0)
                     {
-
+                    if (TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Button>().isActiveAndEnabled)
+                    {
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
+                    }
 
                     }
                     clicked = false;
@@ -48,10 +50,12 @@ public class TilesSwap : MonoBehaviour
                 {
                     if ((thisTileIndex) % 7 != 0)
                     {
-
+                    if (TilesGeneration.gridTiles[thisTileIndex -1].GetComponent<Button>().isActiveAndEnabled)
+                    {
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex - 1].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex - 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
+                    }
 
                     }
                     clicked = false;
@@ -60,11 +64,12 @@ public class TilesSwap : MonoBehaviour
                 {
                     if (thisTileIndex / 7 != 0)
                     {
-
+                    if (TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Button>().isActiveAndEnabled)
+                    {
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
-
+                    }
                     }
                     clicked = false;
                 }
@@ -72,11 +77,12 @@ public class TilesSwap : MonoBehaviour
                 {
                     if ((thisTileIndex / 7 != 6))
                     {
-
+                    if (TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Button>().isActiveAndEnabled)
+                    {
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
-
+                    }
                     }
                     clicked = false;
                 }
