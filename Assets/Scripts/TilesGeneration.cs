@@ -49,30 +49,51 @@ public class TilesGeneration : MonoBehaviour
                 if (gridTiles[i].GetComponent<Image>().sprite == gridTiles[i + 7].GetComponent<Image>().sprite)
                 {
                     if (gridTiles[i].GetComponent<Image>().sprite == gridTiles[i + 14].GetComponent<Image>().sprite)
-                    { 
-                        if (!FadeInCoroutineStarted )
+                    {
+                        if (gridTiles[i].GetComponent<Image>().sprite.name == "bomb_circle")
                         {
-                            if (!FadeOutCoroutineStarted)
-                            {
-                                FadeOutCoroutineStarted = true;
-                                gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
-                                gridTiles[i+7].GetComponent<Animator>().SetTrigger("Disappear");
-                                gridTiles[i+14].GetComponent<Animator>().SetTrigger("Disappear");
-                                StartCoroutine(FadeOut(i, i + 7, i + 14));
-                            }
-                           
-                         
-                          
-
-
-                            FadeInCoroutineStarted = true;
-                            StartCoroutine(DelayBeforeRegenerate(i,i+7,i+14));
-                          
+                            for (int j = 0; j < gridTiles.Count; j++)
+                                bombEffect(j);
                         }
+                        else
+                        {
+                            if (!FadeInCoroutineStarted)
+                            {
+                                if (!FadeOutCoroutineStarted)
+                                {
+                                    FadeOutCoroutineStarted = true;
+                                    gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
+                                    gridTiles[i + 7].GetComponent<Animator>().SetTrigger("Disappear");
+                                    gridTiles[i + 14].GetComponent<Animator>().SetTrigger("Disappear");
+                                    StartCoroutine(FadeOut(i, i + 7, i + 14));
+                                }
 
+
+
+
+
+                                FadeInCoroutineStarted = true;
+                                StartCoroutine(DelayBeforeRegenerate(i, i + 7, i + 14));
+
+                            }
+
+
+
+                        }
                     }
                 }
         }
+    }
+    private void bombEffect(int index)
+    {
+        int rand = Random.Range(1, maxRange);
+        if (rand == maxRange - 1)
+            gridTiles[index].GetComponent<Button>().enabled = false;
+        else
+            gridTiles[index].GetComponent<Button>().enabled = true;
+        gridTiles[index].GetComponent<Image>().sprite = tileSprites[rand];
+        gridTiles[index].GetComponent<Animator>().SetTrigger("Appear");
+      
     }
     private void CheckHorizontal()
     {
