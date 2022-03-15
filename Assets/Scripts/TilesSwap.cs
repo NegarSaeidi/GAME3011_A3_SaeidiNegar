@@ -18,7 +18,13 @@ public class TilesSwap : MonoBehaviour
 
     private void Update()
     {
-
+        if (Timer.time < 1)
+        {
+            for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
+            {
+                TilesGeneration.gridTiles[i].gameObject.GetComponent<Button>().interactable = false;
+            }
+        }
         if (clicked)
         {
             

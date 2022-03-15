@@ -10,7 +10,7 @@ public class TilesGeneration : MonoBehaviour
     public GameObject root;
     public static bool gameStarted;
     public  Sprite[] tileSprites;
-
+    public GameObject winPanel;
     public static int maxRange;
     public static  List<GameObject> gridTiles;
     public bool FadeInCoroutineStarted, FadeOutCoroutineStarted;
@@ -33,6 +33,7 @@ public class TilesGeneration : MonoBehaviour
         {
             GameObject tile = Instantiate(tilePrefab, RowsParent[row].transform.position, RowsParent[row].transform.rotation, RowsParent[row].transform);
             int rand = Random.Range(1, maxRange);
+            if(DifficultyLevelSet.level=="hard" || DifficultyLevelSet.level == "medium")
             if (rand == maxRange - 1)
                 tile.GetComponent<Button>().enabled = false;
             tile.GetComponent<Image>().sprite = tileSprites[rand];
@@ -44,10 +45,36 @@ public class TilesGeneration : MonoBehaviour
     }
     private void Update()
     {
-        
+        CheckForWin();
             CheckVertical();
             CheckHorizontal();
         
+    }
+    private void CheckForWin()
+    {
+        int counter = 0;
+        for (int i = 0; i < scores.Length; i++)
+        {
+            if (scores[i] > 0)
+                counter++;
+        }
+       
+        if (DifficultyLevelSet.level=="easy")
+        {
+            if (counter == 3)
+                winPanel.gameObject.SetActive(true);
+        }
+        else if (DifficultyLevelSet.level == "medium")
+        {
+            if (counter ==4)
+                winPanel.gameObject.SetActive(true);
+        }
+        else if (DifficultyLevelSet.level == "hard")
+        {
+            if (counter ==5)
+                winPanel.gameObject.SetActive(true);
+        }
+
     }
     public  void CheckVertical()
     {
@@ -61,7 +88,7 @@ public class TilesGeneration : MonoBehaviour
                         if (gridTiles[i].GetComponent<Image>().sprite.name == "bomb_circle")
                         {
                             for (int j = 0; j < gridTiles.Count; j++)
-                                bombEffect(j);
+                                bombImmoveableEffect(j);
                         }
                         else
                         {
@@ -95,10 +122,11 @@ public class TilesGeneration : MonoBehaviour
                 }
         }
     }
-    private void bombEffect(int index)
+    private void bombImmoveableEffect(int index)
     {
         int rand = Random.Range(1, maxRange);
-        if (rand == maxRange - 1)
+        if (DifficultyLevelSet.level == "hard" || DifficultyLevelSet.level == "medium")
+            if (rand == maxRange - 1)
             gridTiles[index].GetComponent<Button>().enabled = false;
         else
             gridTiles[index].GetComponent<Button>().enabled = true;
@@ -121,7 +149,14 @@ public class TilesGeneration : MonoBehaviour
                                 if (gridTiles[i].GetComponent<Image>().sprite.name == "bomb_circle")
                                 {
                                     for (int j = 0; j < gridTiles.Count; j++)
-                                        bombEffect(j);
+                                        bombImmoveableEffect(j);
+                                    for (int k = 0; k < scoreTiles.Length; k++)
+                                    {
+                                        scores[k] = 0;
+                                       
+                                        scoreTiles[k].GetComponent<TextMeshProUGUI>().text = "0";
+                                        
+                                    }
                                 }
                                 else
                                 {
