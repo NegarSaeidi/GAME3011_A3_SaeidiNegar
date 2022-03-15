@@ -9,8 +9,8 @@ public class TilesSwap : MonoBehaviour
     private bool clicked;
   public void OnClikTile()
     {
-      
-        
+
+             TilesGeneration.gameStarted = true;
             mouseDownPosition = Input.mousePosition;
             clicked = true;
         
@@ -49,7 +49,8 @@ public class TilesSwap : MonoBehaviour
 
                     }
                     clicked = false;
-                }
+                TilesGeneration.gameStarted = false;
+            }
                 else if (Input.mousePosition.x < mouseDownPosition.x)
                 {
                     if ((thisTileIndex) % 7 != 0)
@@ -63,7 +64,8 @@ public class TilesSwap : MonoBehaviour
 
                     }
                     clicked = false;
-                }
+                TilesGeneration.gameStarted = false;
+            }
                 else if (Input.mousePosition.y < mouseDownPosition.y)
                 {
                     if (thisTileIndex / 7 != 0)
@@ -76,7 +78,8 @@ public class TilesSwap : MonoBehaviour
                     }
                     }
                     clicked = false;
-                }
+                TilesGeneration.gameStarted = false;
+            }
                 else if (Input.mousePosition.y > mouseDownPosition.y)
                 {
                     if ((thisTileIndex / 7 != 6))
@@ -89,7 +92,8 @@ public class TilesSwap : MonoBehaviour
                     }
                     }
                     clicked = false;
-                }
+                TilesGeneration.gameStarted = false;
+            }
             }
         
     }

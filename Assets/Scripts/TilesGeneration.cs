@@ -8,7 +8,7 @@ public class TilesGeneration : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[] RowsParent;
     public GameObject root;
-    
+    public static bool gameStarted;
     public  Sprite[] tileSprites;
 
     public static int maxRange;
@@ -44,8 +44,10 @@ public class TilesGeneration : MonoBehaviour
     }
     private void Update()
     {
-       CheckVertical();
-       CheckHorizontal();
+        
+            CheckVertical();
+            CheckHorizontal();
+        
     }
     public  void CheckVertical()
     {
@@ -67,11 +69,13 @@ public class TilesGeneration : MonoBehaviour
                             {
                                 if (!FadeOutCoroutineStarted)
                                 {
+                                    GetComponent<AudioSource>().Play();
                                     Scoring(gridTiles[i].GetComponent<Image>().sprite);
                                     FadeOutCoroutineStarted = true;
                                     gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
                                     gridTiles[i + 7].GetComponent<Animator>().SetTrigger("Disappear");
                                     gridTiles[i + 14].GetComponent<Animator>().SetTrigger("Disappear");
+                                 
                                     StartCoroutine(FadeOut(i, i + 7, i + 14));
                                 }
 
@@ -125,6 +129,7 @@ public class TilesGeneration : MonoBehaviour
                                     {
                                         if (!FadeOutCoroutineStarted)
                                         {
+                                            GetComponent<AudioSource>().Play();
                                             Scoring(gridTiles[i].GetComponent<Image>().sprite);
                                             FadeOutCoroutineStarted = true;
                                             gridTiles[i].GetComponent<Animator>().SetTrigger("Disappear");
