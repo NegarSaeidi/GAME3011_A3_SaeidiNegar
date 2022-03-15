@@ -8,15 +8,18 @@ public class TilesGeneration : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[] RowsParent;
     public GameObject root;
-    public Sprite[] tileSprites;
-    private int maxRange;
+    
+    public  Sprite[] tileSprites;
+
+    public static int maxRange;
     public static  List<GameObject> gridTiles;
     public bool FadeInCoroutineStarted, FadeOutCoroutineStarted;
     public GameObject[] scoreTiles;
     private int[] scores;
+
     void Start()
     {
-        maxRange = 12;
+        maxRange = 10;
         scores = new int[10];
         gridTiles = new List<GameObject>();
         for (int i=0; i<RowsParent.Length;i++)
@@ -44,7 +47,7 @@ public class TilesGeneration : MonoBehaviour
        CheckVertical();
        CheckHorizontal();
     }
-    private void CheckVertical()
+    public  void CheckVertical()
     {
         for (int i = 0; i < gridTiles.Count; i++)
         {
@@ -74,7 +77,7 @@ public class TilesGeneration : MonoBehaviour
 
 
 
-
+                               
 
                                 FadeInCoroutineStarted = true;
                                 StartCoroutine(DelayBeforeRegenerate(i, i + 7, i + 14));
@@ -99,7 +102,7 @@ public class TilesGeneration : MonoBehaviour
         gridTiles[index].GetComponent<Animator>().SetTrigger("Appear");
       
     }
-    private void CheckHorizontal()
+    public void CheckHorizontal()
     {
         for (int i = 0; i < gridTiles.Count; i++)
         {
@@ -214,7 +217,7 @@ public class TilesGeneration : MonoBehaviour
                 break;
             case "2":
                 scores[7]++;
-                scoreTiles[7].GetComponent<TextMeshProUGUI>().text = scores[70].ToString();
+                scoreTiles[7].GetComponent<TextMeshProUGUI>().text = scores[7].ToString();
                 break;
             case "1":
                 scores[8]++;

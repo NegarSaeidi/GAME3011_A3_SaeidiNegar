@@ -38,9 +38,13 @@ public class TilesSwap : MonoBehaviour
                     {
                     if (TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Button>().isActiveAndEnabled)
                     {
-                        Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite;
-                        TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
-                        TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
+
+                      //  if (CheckHorizontal() || CheckVertical())
+                        {
+                            Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite;
+                            TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
+                            TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
+                        }
                     }
 
                     }
@@ -90,6 +94,47 @@ public class TilesSwap : MonoBehaviour
         
     }
 
+    public bool CheckVertical()
+    {
+        bool matched=false;
+        for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
+        {
+            if (i + 14 < TilesGeneration.gridTiles.Count)
+                if (TilesGeneration.gridTiles[i].GetComponent<Image>().sprite == TilesGeneration.gridTiles[i + 7].GetComponent<Image>().sprite)
+                {
+                    if (TilesGeneration.gridTiles[i].GetComponent<Image>().sprite == TilesGeneration.gridTiles[i + 14].GetComponent<Image>().sprite)
+                    {
 
+
+
+                        matched = true;
+
+                       
+                    }
+                }
+        }
+        return matched;
+    }
+    public bool CheckHorizontal()
+    {
+        bool matched = false;
+        for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
+        {
+            if (i + 2 < TilesGeneration.gridTiles.Count)
+            {
+                if ((i / 7) == ((i + 1) / 7))
+                    if (TilesGeneration.gridTiles[i].GetComponent<Image>().sprite == TilesGeneration.gridTiles[i + 1].GetComponent<Image>().sprite)
+                    {
+                        if ((i / 7) == ((i + 2) / 7))
+                            if (TilesGeneration.gridTiles[i].GetComponent<Image>().sprite == TilesGeneration.gridTiles[i + 2].GetComponent<Image>().sprite)
+                            {
+                                matched = true;
+                            }
+                    }
+            }
+
+        }
+        return matched;
+    }
 
 }
