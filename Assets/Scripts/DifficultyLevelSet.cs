@@ -21,7 +21,7 @@ public class DifficultyLevelSet : MonoBehaviour
         {
             level = "easy";
             TilesGeneration.maxRange = 10;
-            Timer.time = 120;
+            Timer.time = 90;
             for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
                 Regenrate(i);
             for (int i = 0; i < scoreTiles.Length; i++)
@@ -37,13 +37,14 @@ public class DifficultyLevelSet : MonoBehaviour
         {
             level = "medium";
             TilesGeneration.maxRange = 12;
-            Timer.time = 120;
+            Timer.time = 60;
             for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
                 Regenrate(i);
-            for (int i = 0; i < scoreTiles.Length; i++)
+            for (int i = 0; i < scores.Length; i++)
             {
-                scoreTiles[i].GetComponent<TextMeshProUGUI>().text = resetScore.ToString();
-                scores[i] = 0;
+                TilesGeneration.scores[i] = 0;
+
+                scoreTiles[i].GetComponent<TextMeshProUGUI>().text = "0";
             }
         }
     }
@@ -53,13 +54,14 @@ public class DifficultyLevelSet : MonoBehaviour
         {
             level = "hard";
             TilesGeneration.maxRange = 12;
-            Timer.time = 120;
+            Timer.time = 30;
             for (int i = 0; i < TilesGeneration.gridTiles.Count; i++)
                 Regenrate(i);
-            for (int i = 0; i < scoreTiles.Length; i++)
+            for (int i = 0; i < scores.Length; i++)
             {
-                scoreTiles[i].GetComponent<TextMeshProUGUI>().text = resetScore.ToString();
-                scores[i] = 0;
+                TilesGeneration.scores[i] = 0;
+
+                scoreTiles[i].GetComponent<TextMeshProUGUI>().text = "0";
             }
         }
     }

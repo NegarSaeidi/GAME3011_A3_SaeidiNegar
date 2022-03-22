@@ -10,7 +10,7 @@ public class TilesMovement : MonoBehaviour
        
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-    
+    TilesGeneration.tilesGenerating = false;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
     }

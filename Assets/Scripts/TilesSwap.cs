@@ -7,10 +7,14 @@ public class TilesSwap : MonoBehaviour
     private Vector3 mouseDownPosition;
     private int thisTileIndex;
     private bool clicked;
+    public GameObject arrow;
+    private GameObject direction;
   public void OnClikTile()
     {
 
              TilesGeneration.gameStarted = true;
+             direction = Instantiate(arrow, this.transform);
+       
             mouseDownPosition = Input.mousePosition;
             clicked = true;
         
@@ -37,7 +41,7 @@ public class TilesSwap : MonoBehaviour
                         thisTileIndex = i;
                     }
                 }
-
+                //right
                 if (Input.mousePosition.x > mouseDownPosition.x)
                 {
                     if ((thisTileIndex + 1) % 7 != 0)
@@ -47,6 +51,9 @@ public class TilesSwap : MonoBehaviour
 
                       //  if (CheckHorizontal() || CheckVertical())
                         {
+                            direction.GetComponent<Animator>().SetBool("Right", true);
+                            StartCoroutine(causeDelay());
+                          
                             Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite;
                             TilesGeneration.gridTiles[thisTileIndex + 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                             TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
@@ -63,6 +70,8 @@ public class TilesSwap : MonoBehaviour
                     {
                     if (TilesGeneration.gridTiles[thisTileIndex -1].GetComponent<Button>().isActiveAndEnabled)
                     {
+                        direction.GetComponent<Animator>().SetBool("Left", true);
+                        StartCoroutine(causeDelay());
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex - 1].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex - 1].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
@@ -78,6 +87,8 @@ public class TilesSwap : MonoBehaviour
                     {
                     if (TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Button>().isActiveAndEnabled)
                     {
+                        direction.GetComponent<Animator>().SetBool("Down", true);
+                        StartCoroutine(causeDelay());
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex - 7].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
@@ -92,6 +103,8 @@ public class TilesSwap : MonoBehaviour
                     {
                     if (TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Button>().isActiveAndEnabled)
                     {
+                        direction.GetComponent<Animator>().SetBool("Up", true);
+                        StartCoroutine(causeDelay());
                         Sprite temp = TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex + 7].GetComponent<Image>().sprite = TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite;
                         TilesGeneration.gridTiles[thisTileIndex].GetComponent<Image>().sprite = temp;
@@ -124,6 +137,11 @@ public class TilesSwap : MonoBehaviour
                 }
         }
         return matched;
+    }
+    IEnumerator causeDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(direction);
     }
     public bool CheckHorizontal()
     {

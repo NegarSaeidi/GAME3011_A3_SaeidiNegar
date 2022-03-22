@@ -15,39 +15,61 @@ public class TilesGeneration : MonoBehaviour
     public static  List<GameObject> gridTiles;
     public bool FadeInCoroutineStarted, FadeOutCoroutineStarted;
     public GameObject[] scoreTiles;
-    private int[] scores;
+    public static int[] scores;
+   public static bool tilesGenerating;
+    private int previousRandom;
 
     void Start()
     {
+        tilesGenerating = false;
         maxRange = 10;
+        previousRandom = 1;
         scores = new int[10];
         gridTiles = new List<GameObject>();
         for (int i=0; i<RowsParent.Length;i++)
         GenerateTiles(i);
-       
+        for (int k = 0; k < scores.Length; k++)
+        {
+            scores[k] = 0;
+
+            scoreTiles[k].GetComponent<TextMeshProUGUI>().text = "0";
+
+        }
+
     }
 
     private void GenerateTiles(int row)
     {
         for (int i = 0; i < 7; i++)
         {
+            int rand;
+            //tilesGenerating = true;
             GameObject tile = Instantiate(tilePrefab, RowsParent[row].transform.position, RowsParent[row].transform.rotation, RowsParent[row].transform);
-            int rand = Random.Range(1, maxRange);
-            if(DifficultyLevelSet.level=="hard" || DifficultyLevelSet.level == "medium")
+            do
+            {
+               rand = Random.Range(1, maxRange);
+            }
+            while (previousRandom == rand);
+            previousRandom = rand;
+            if (DifficultyLevelSet.level=="hard" || DifficultyLevelSet.level == "medium")
             if (rand == maxRange - 1)
                 tile.GetComponent<Button>().enabled = false;
             tile.GetComponent<Image>().sprite = tileSprites[rand];
             gridTiles.Add(tile);
             tile.transform.parent = RowsParent[row].transform;
+
         }
         
      
     }
     private void Update()
     {
-        CheckForWin();
+        if (!tilesGenerating)
+        {
+            CheckForWin();
             CheckVertical();
             CheckHorizontal();
+        }
         
     }
     private void CheckForWin()
@@ -87,8 +109,19 @@ public class TilesGeneration : MonoBehaviour
                     {
                         if (gridTiles[i].GetComponent<Image>().sprite.name == "bomb_circle")
                         {
+                           // tilesGenerating = true;
                             for (int j = 0; j < gridTiles.Count; j++)
+                            {
                                 bombImmoveableEffect(j);
+                            }
+                            for (int k = 0; k < scores.Length; k++)
+                            {
+                                scores[k] = 0;
+
+                                scoreTiles[k].GetComponent<TextMeshProUGUI>().text = "0";
+
+                            }
+                           // tilesGenerating = false;
                         }
                         else
                         {
@@ -124,6 +157,7 @@ public class TilesGeneration : MonoBehaviour
     }
     private void bombImmoveableEffect(int index)
     {
+       
         int rand = Random.Range(1, maxRange);
         if (DifficultyLevelSet.level == "hard" || DifficultyLevelSet.level == "medium")
             if (rand == maxRange - 1)
@@ -150,7 +184,7 @@ public class TilesGeneration : MonoBehaviour
                                 {
                                     for (int j = 0; j < gridTiles.Count; j++)
                                         bombImmoveableEffect(j);
-                                    for (int k = 0; k < scoreTiles.Length; k++)
+                                    for (int k = 0; k < scores.Length; k++)
                                     {
                                         scores[k] = 0;
                                        
@@ -201,7 +235,7 @@ public class TilesGeneration : MonoBehaviour
     }
     IEnumerator DelayBeforeRegenerate(int i,int j, int k)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
         int rand = Random.Range(1, maxRange);
         if (rand == maxRange - 1)
